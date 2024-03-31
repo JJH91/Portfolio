@@ -354,7 +354,7 @@ public class UnitSpawnData : IWeightedRandomPickable
     [ShowInInspector] public ObscuredString Id { get; set; }
     [ShowInInspector] public ObscuredFloat Weight { get; set; }
     [ShowInInspector] public ObscuredBool IsExceptOnRandomPick { get; set; } = false;
-    [ShowInInspector] public ObscuredInt[] SpawnWaves { get; set; } // Role Dictionary 의 0번 인덱스의 값만 사용함. (거기에만 합산 및 사용)
+    [ShowInInspector] public ObscuredInt[] SpawnWaves { get; set; }
 
     public void InitRole()
     {
