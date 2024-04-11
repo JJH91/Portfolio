@@ -7,14 +7,14 @@
   1. Inventory.
      - RecyclableItemViewer 및 RecyclableItem 스크립트를 상속하여 메일함과 같은 기능을 구현할 수 있습니다.
      - 데이터 필터링, 연속 PlayFab API 요청 및 응답대기, 아이템 간격 및 스크롤 바 등을 구현했습니다.
-     - 무한 스크롤 뷰어는 Asset Store의 [Recyclable Scroll Rect - Optimized List/Grid View(Free)] 에셋을 일부 수정하여 구현했습니다.
+     - 무한 스크롤 뷰어는 Asset Store의 [Recyclable Scroll Rect - Optimized List/Grid View(Free)] 에셋을 일부 수정하여 사용했습니다.
 
 
   2. StatData.
      - 캐릭터, 장비, 인챈트가 공유하는 데이터로 Stat을 변경할 수 있습니다.
      - 데이터의 조립은 PlayFab 서버 사용을 전제로 조립합니다.
      - 간편한 StatMod 데이터의 사용을 위해 Reflection으로 StatModDictionary를 구성하여 사용합니다.
-     - 스텟 모디파이 데이터는 Asset Store의 [Character Stats(Free)] 에셋을 일부 수정하여 구현했습니다.
+     - 스텟 모디파이 데이터는 Asset Store의 [Character Stats(Free)] 에셋을 일부 수정하여 사용했습니다.
 
 
   3. DragonBonesUGUI.
