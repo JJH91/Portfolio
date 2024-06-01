@@ -130,6 +130,9 @@ public class Skill : AddressableSerializedMonoBehavior
     Rigidbody2D rigidbody2D;
 
     WaitUntil waitSkillActivating;
+    WaitUntil waitProjectilePartDeactice;
+    WaitUntil waitImapctPartDeactice;
+    WaitUntil waitStreamPartDeactice;
     WaitForSeconds waitHomingDelay = new WaitForSeconds(0.2f);
 
     Coroutine homingToTargetCo;
@@ -140,6 +143,10 @@ public class Skill : AddressableSerializedMonoBehavior
             rigidbody2D = GetComponent<Rigidbody2D>();
 
         waitSkillActivating = new WaitUntil(() => isSkillActivated);
+
+        waitProjectilePartDeactice = new WaitUntil(() => !projectilePart.gameObject.activeSelf);
+        waitImapctPartDeactice = new WaitUntil(() => !impactPart.gameObject.activeSelf);
+        waitStreamPartDeactice = new WaitUntil(() => !streamPart.gameObject.activeSelf);
 
         base.Awake();
     }
@@ -291,6 +298,7 @@ public class Skill : AddressableSerializedMonoBehavior
 
         gameObject.SetActive(false);
     }
+
     /**
      * !--------------------------------------------------
      * !--------------------------------------------------
@@ -650,11 +658,11 @@ public class Skill : AddressableSerializedMonoBehavior
         yield return new WaitUntil(() => SkillRefCount == 0);
 
         if (projectilePart != null)
-            yield return new WaitUntil(() => !projectilePart.gameObject.activeSelf);
+            yield return waitProjectilePartDeactice;
         if (impactPart != null)
-            yield return new WaitUntil(() => !impactPart.gameObject.activeSelf);
+            yield return waitImapctPartDeactice;
         if (streamPart != null)
-            yield return new WaitUntil(() => !streamPart.gameObject.activeSelf);
+            yield return waitStreamPartDeactice;
 
         gameObject.SetActive(false);
     }
