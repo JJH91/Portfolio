@@ -48,6 +48,16 @@
      - Skill의 충돌 처리는 각 스킬을 생성한 클라이언트에서 처리한 후 동기화시켜 플레이어의 플레이 경험을 개선하였습니다.
 
 
+    4. NetworkManager(EntranceModule, LobbyModule)
+       - 닉네임을 설정하여 마스터 서버에 접속 후, 이어서 콜백을 통해 로비까지 접속합니다.
+       - CreateRoom, JoinRandomRoom 메소드로 인게임의 '빠른시작' 기능을 구현했습니다. 공개된 랜덤한 Room에 참가하며, 참가할 수 있는 방이 없는 경우에는 방을 만들고 다른 플레이어를 기다립니다.
+       - CreateSecretRoom 메소드로 비공개 Room을 만들어 인게임에서 '같이하기 - 방 참가' 기능으로 방에 참가하여 친구와 같이 게임을 즐길 수 있습니다.
+
+      
+    5. ModalWindow
+       - 인게임에서 팝업 형식으로 나오는 윈도우 스크립트입니다. OpenModalWindow 메소드로 윈도우를 띄울 수 있으며, 제목과 내용 그리고 Confirm, Cancel 버튼을 눌렀을 때의 Callback을 파라미터로 입력할 수 있습니다.
+
+
 # Slime Hill
 - Slime Hill 프로젝트에 사용된 스크립트 입니다.
 
