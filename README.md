@@ -31,11 +31,22 @@
 - Animal Defense 프로젝트에 사용된 스크립트 입니다.
 - 본인 작업한 스크립트 일부를 업로드했습니다.
 
-  1. Unit(Character, Monster)
-     - Character, Monster는 추상 클래스인 NetworkAddressableMonoBehavior‎를 상속받아 구현한 클래스입니다.
+
+  1. Object Manager
      - NetworkAddressableMonoBehavior‎ 스크립트의 SetNetworkActive 메소드를 통해 Photon RPC가 실행되어 플레이어간 오브젝트의 활성/비활성화가 동기화되며 오브젝트 풀링에 사용됩니다.
+
+
+  2. Unit(Character, Monster)
+     - Character, Monster는 추상 클래스인 NetworkAddressableMonoBehavior‎를 상속받아 구현한 클래스입니다.
      - Character의 AI(FSM)는 해당 유닛을 생성한 클라이언트만 로직을 실행하고 필요한 부분만 RPC로 동기화하였습니다.
      - Monster의 이동을 PhotonView의 Transform 위치 동기화만 사용할 경우, 네트워크 환경에 따라 부자연스럽게 움직이는 경우가 있었습니다. 보간을 통해 자연스러운 움직임을 구현할 수도 있지만, 생성 위치만 동기화하고 이동은 각 클라이언트에서 처리하여 네트워크 전송량을 줄이고 좀 더 자연스러운 움직임을 보이도록 했습니다.
+
+
+  3. Skill
+     - Skill은 추상 클래스인 NetworkAddressableMonoBehavior‎를 상속받아 구현한 클래스입니다.
+     - Skill의 발동은 RPC로 동기화하였습니다. 여기서 발동한 캐릭터와 타겟 몬스터의 정보를 파라미터로 넘겨주어야 하는데, Photon에서 네트워크 전송을 지원하는 데이터 타입으로 전송이 필요했습니다. 각 유닛의 PhotonView ID값(int)을 전송하고 CombatManager에서 이 값으로 Dictionary에서 유닛을 접근하는 방법을 사용해 문제를 해결했습니다.
+     - Skill의 충돌 처리는 각 스킬을 생성한 클라이언트에서 처리한 후 동기화시켜 플레이어의 플레이 경험을 개선하였습니다.
+
 
 # Slime Hill
 - Slime Hill 프로젝트에 사용된 스크립트 입니다.
