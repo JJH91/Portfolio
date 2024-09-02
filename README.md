@@ -32,29 +32,29 @@
 - 본인 작업한 스크립트 중 일부를 업로드했습니다.
 
 
-  1. ObjectManager
+  1. NetworkManager(EntranceModule, LobbyModule)
+       - 닉네임을 설정하여 마스터 서버에 접속 후, 이어서 콜백을 통해 로비까지 접속합니다.
+       - CreateRoom, JoinRandomRoom 메소드로 인게임의 '빠른시작' 기능을 구현했습니다. 공개된 랜덤한 Room에 참가하며, 참가할 수 있는 방이 없는 경우에는 방을 만들고 다른 플레이어를 기다립니다.
+       - CreateSecretRoom 메소드로 비공개 Room을 만들어 인게임에서 '같이하기 - 방 참가' 기능으로 방에 참가하여 친구와 같이 게임을 즐길 수 있습니다.
+
+
+  2. ObjectManager
      - NetworkAddressableMonoBehavior‎ 스크립트의 SetNetworkActive 메소드를 통해 Photon RPC가 실행되어 플레이어간 오브젝트의 활성/비활성화가 동기화되며 오브젝트 풀링에 사용됩니다.
 
 
-  2. Unit(Character, Monster)
+  3. Unit(Character, Monster)
      - Character, Monster는 추상 클래스인 NetworkAddressableMonoBehavior‎를 상속받아 구현한 클래스입니다.
      - Character의 AI(FSM)는 해당 유닛을 생성한 클라이언트만 로직을 실행하고 필요한 부분만 RPC로 동기화하였습니다.
      - Monster의 이동을 PhotonView의 Transform 위치 동기화만 사용할 경우, 네트워크 환경에 따라 부자연스럽게 움직이는 경우가 있었습니다. 보간을 통해 자연스러운 움직임을 구현할 수도 있지만, 생성 위치만 동기화하고 이동은 각 클라이언트에서 처리하여 네트워크 전송량을 줄이고 좀 더 자연스러운 움직임을 보이도록 했습니다.
      - Unit은 활성화시에 CombatManager의 Dictionary에 객체를 등록하여 Skill의 충돌이나 Photon RPC에서 해당 객체를 찾기 쉽도록 하였습니다.
 
 
-  3. Skill
+  4. Skill
      - Skill은 추상 클래스인 NetworkAddressableMonoBehavior‎를 상속받아 구현한 클래스입니다.
      - Skill의 발동은 RPC로 동기화하였습니다. 여기서 발동한 캐릭터와 타겟 몬스터의 정보를 파라미터로 넘겨주어야 하는데, Photon에서 네트워크 전송을 지원하는 데이터 타입으로 전송이 필요했습니다. 각 유닛의 PhotonView ID값(int)을 전송하고 CombatManager에서 이 값으로 Dictionary에서 유닛을 접근하는 방법을 사용해 문제를 해결했습니다.
      - Skill의 충돌 처리는 각 스킬을 생성한 클라이언트에서 처리한 후 동기화시켜 플레이어의 플레이 경험을 개선하였습니다.
 
 
-    4. NetworkManager(EntranceModule, LobbyModule)
-       - 닉네임을 설정하여 마스터 서버에 접속 후, 이어서 콜백을 통해 로비까지 접속합니다.
-       - CreateRoom, JoinRandomRoom 메소드로 인게임의 '빠른시작' 기능을 구현했습니다. 공개된 랜덤한 Room에 참가하며, 참가할 수 있는 방이 없는 경우에는 방을 만들고 다른 플레이어를 기다립니다.
-       - CreateSecretRoom 메소드로 비공개 Room을 만들어 인게임에서 '같이하기 - 방 참가' 기능으로 방에 참가하여 친구와 같이 게임을 즐길 수 있습니다.
-
-      
     5. ModalWindow
        - 인게임에서 팝업 형식으로 나오는 윈도우 스크립트입니다. OpenModalWindow 메소드로 윈도우를 띄울 수 있으며, 제목과 내용 그리고 Confirm, Cancel 버튼을 눌렀을 때의 Callback을 파라미터로 입력할 수 있습니다.
 
